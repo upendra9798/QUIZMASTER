@@ -13,7 +13,8 @@ export const generateTokenAndSetCookie = (userId,res) => {
         // the client side, preventing XSS attacks.
         sameSite: "strict",//Prevents the cookie from being sent with cross-site requests
         //  (helps prevent CSRF attacks).
-        secure: process.env.NODE_ENV != "development",//Ensures the cookie is 
+        secure: process.env.NODE_ENV == "production",// Use this when testing in production.
+        // secure: process.env.NODE_ENV != "development",//Ensures the cookie is 
         // only sent over HTTPS in production.
     })
 }
