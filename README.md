@@ -78,46 +78,230 @@ QuizMaster addresses the common challenge of creating effective study materials 
 
 ## 🏗️ **Architecture & Design Patterns**
 
-### **Frontend Architecture**
+<div align="center">
+
+### 🎯 **System Architecture Overview**
+
 ```
+┌─────────────────────────────────────────────────────────────────┐
+│                         🌐 CLIENT LAYER                         │
+├─────────────────────────────────────────────────────────────────┤
+│  📱 React Frontend    │  🎨 TailwindCSS    │  ⚡ Vite Build     │
+└─────────────────────────────────────────────────────────────────┘
+                                    │
+                               🌉 HTTP/REST API
+                                    │
+┌─────────────────────────────────────────────────────────────────┐
+│                        🚀 APPLICATION LAYER                     │
+├─────────────────────────────────────────────────────────────────┤
+│  🛡️ Middleware       │  🎯 Controllers    │  📝 Routes          │
+└─────────────────────────────────────────────────────────────────┘
+                                    │
+                               🔗 Mongoose ODM
+                                    │
+┌─────────────────────────────────────────────────────────────────┐
+│                         🗄️ DATA LAYER                          │
+├─────────────────────────────────────────────────────────────────┤
+│  👤 Users             │  📝 Quizzes       │  📊 Analytics       │
+└─────────────────────────────────────────────────────────────────┘
+```
+
+</div>
+
+---
+
+### 🎨 **Frontend Architecture**
+
+<table>
+<tr>
+<td width="50%">
+
+**📂 Project Structure**
+```bash
 src/
-├── components/          # Reusable UI components
-│   ├── header/         # Navigation and user menu
-│   ├── profile/        # User profile management
-│   ├── GeneratedQuestionsPreview.jsx
-│   ├── HistorySection.jsx
-│   ├── PerformanceSection.jsx
-│   ├── TestInterface.jsx
-│   └── UploadSection.jsx
-├── pages/
-│   ├── auth/           # Authentication pages
-│   └── home/           # Main application dashboard
-└── assets/             # Static resources
+├── 📄 App.jsx                    # Root component
+├── 🎯 main.jsx                   # Application entry
+├── 🎨 index.css                  # Global styles
+├── 
+├── 📁 components/                # Reusable UI components
+│   ├── 🧭 header/               # Navigation components
+│   │   └── Header.jsx
+│   ├── 👤 profile/              # User profile management
+│   │   ├── ProfileModal.jsx
+│   │   └── PreferencesModal.jsx
+│   ├── 📋 HistorySection.jsx    # Learning history
+│   ├── 📊 PerformanceSection.jsx # Analytics dashboard
+│   ├── 🧪 TestInterface.jsx     # Quiz interface
+│   ├── 📤 UploadSection.jsx     # File upload
+│   └── 🎯 TestCard.jsx          # Quiz cards
+│   
+├── 📁 pages/                    # Route components
+│   ├── 🔐 auth/                # Authentication
+│   │   └── AuthPage.jsx
+│   └── 🏠 home/                # Main dashboard
+│       └── HomePage.jsx
+│   
+└── 📁 assets/                   # Static resources
+    └── 🖼️ images & icons
 ```
 
-### **Backend Architecture**
+</td>
+<td width="50%">
+
+**🔄 Component Flow**
+```mermaid
+graph TD
+    A[🎯 App.jsx] --> B[🔐 AuthPage]
+    A --> C[🏠 HomePage]
+    C --> D[🧭 Header]
+    C --> E[📊 QuickStats]
+    C --> F[📤 UploadSection]
+    C --> G[🧪 TestSection]
+    C --> H[📋 HistorySection]
+    C --> I[📈 PerformanceSection]
+    F --> J[🤖 AI Generation]
+    G --> K[⏱️ TestInterface]
+    K --> L[🏆 TestResults]
 ```
+
+**🎯 Key Features**
+- ⚛️ **React 19.1** with modern hooks
+- 🎨 **TailwindCSS** for styling
+- 🧭 **React Router** for navigation
+- 📱 **Responsive Design** principles
+- 🔄 **State Management** with Context
+- ⚡ **Performance Optimization**
+
+</td>
+</tr>
+</table>
+
+---
+
+### 🚀 **Backend Architecture**
+
+<table>
+<tr>
+<td width="50%">
+
+**📂 Server Structure**
+```bash
 backend/
-├── controllers/        # Business logic layer
-│   ├── auth.controller.js
-│   ├── quiz.controller.js
-│   └── user.controller.js
-├── models/            # Database schemas
-│   ├── user.model.js
-│   ├── quiz.model.js
-│   ├── quizHistory.model.js
-│   └── uploadedFile.model.js
-├── routes/            # API endpoints
-├── middleware/        # Authentication & validation
-└── lib/utils/         # Helper functions
+├── 🚀 server.js                 # Application entry
+├── 🔧 package.json             # Dependencies
+├── 🌿 .env                     # Environment config
+├── 
+├── 📁 controllers/             # Business logic
+│   ├── 🔐 auth.controller.js   # Authentication
+│   ├── 📝 quiz.controller.js   # Quiz management
+│   └── 👤 user.controller.js   # User operations
+│   
+├── 📁 models/                  # Database schemas
+│   ├── 👤 user.model.js        # User entity
+│   ├── 📝 quiz.model.js        # Quiz entity
+│   ├── 📊 quizHistory.model.js # Test history
+│   ├── 📈 quizStats.model.js   # Analytics
+│   └── 📎 uploadedFile.model.js # File management
+│   
+├── 📁 routes/                  # API endpoints
+│   ├── 🔐 auth.routes.js       # Auth routes
+│   ├── 📝 quiz.routes.js       # Quiz routes
+│   └── 👤 user.routes.js       # User routes
+│   
+├── 📁 middleware/              # Request processing
+│   └── 🛡️ protectRoute.js     # Authentication
+│   
+├── 📁 lib/utils/              # Helper functions
+│   └── 🔑 generateToken.js    # JWT utilities
+│   
+├── 📁 db/                     # Database config
+│   └── 🔗 connectMongoDB.js   # DB connection
+│   
+└── 📁 uploads/                # File storage
+    └── 📎 uploaded files
 ```
 
-### **Design Patterns Used**
-- **🏗️ MVC Pattern**: Separation of concerns with Models, Views, Controllers
-- **🛡️ Middleware Pattern**: Authentication, validation, and error handling
-- **📦 Component-Based Architecture**: Reusable React components
-- **🎣 Custom Hooks**: State management and side effects
-- **🔄 Repository Pattern**: Data access abstraction layer
+</td>
+<td width="50%">
+
+**🔄 API Flow**
+```mermaid
+graph LR
+    A[📱 Client] --> B[🌐 Express Server]
+    B --> C{🛡️ Auth Middleware}
+    C -->|✅ Valid| D[🎯 Controller]
+    C -->|❌ Invalid| E[🚫 Error Response]
+    D --> F[📊 Model Layer]
+    F --> G[🗄️ MongoDB]
+    G --> F
+    F --> D
+    D --> H[📤 JSON Response]
+    H --> A
+```
+
+**🎯 Key Features**
+- 🟢 **Node.js** runtime environment
+- 🚀 **Express.js** web framework
+- 🍃 **MongoDB** with Mongoose ODM
+- 🔐 **JWT Authentication** system
+- 📤 **Multer** file upload handling
+- 🛡️ **Security** middleware stack
+- 🌐 **CORS** configuration
+
+</td>
+</tr>
+</table>
+
+---
+
+### 🎯 **Design Patterns & Principles**
+
+<div align="center">
+
+| Pattern | Implementation | Benefits |
+|---------|---------------|----------|
+| 🏗️ **MVC Architecture** | Separation of Models, Views, Controllers | Clean code organization, maintainability |
+| 🛡️ **Middleware Pattern** | Authentication, validation, error handling | Reusable request processing logic |
+| 📦 **Component Architecture** | Reusable React components | DRY principle, consistent UI |
+| 🎣 **Custom Hooks** | State management, side effects | Logic reusability, cleaner components |
+| 🔄 **Repository Pattern** | Data access abstraction | Database independence, testability |
+| 🏭 **Factory Pattern** | Question generation, model creation | Flexible object creation |
+| 🎭 **Observer Pattern** | Real-time updates, state changes | Reactive user interface |
+
+</div>
+
+---
+
+### 🔄 **Data Flow Architecture**
+
+```mermaid
+graph TB
+    subgraph "🎨 Frontend Layer"
+        A[👤 User Input] --> B[⚛️ React Components]
+        B --> C[🎣 Custom Hooks]
+        C --> D[🌐 API Calls]
+    end
+    
+    subgraph "🚀 Backend Layer"
+        D --> E[🛡️ Middleware]
+        E --> F[🎯 Controllers]
+        F --> G[📊 Business Logic]
+        G --> H[🔗 Database Models]
+    end
+    
+    subgraph "🗄️ Database Layer"
+        H --> I[🍃 MongoDB]
+        I --> J[📊 Collections]
+    end
+    
+    J --> H
+    H --> G
+    G --> F
+    F --> K[📤 JSON Response]
+    K --> C
+    C --> B
+    B --> L[🖥️ UI Update]
+```
 
 ---
 
