@@ -1,4 +1,6 @@
 // Test Results Component
+import { Trophy } from "lucide-react";
+
 const TestResults = ({ test, answers, questions, onComplete }) => {
   const correctAnswers = Object.entries(answers).filter(
     ([questionIndex, answerIndex]) => questions[questionIndex].correct === answerIndex

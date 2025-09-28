@@ -8,7 +8,9 @@ import {
 import Header from '../../components/header/Header.jsx';
 import QuickStats from '../../components/QuickStats.jsx';
 import UploadSection from '../../components/UploadSection.jsx';
-// import TestSection from '../../components/TestSection.jsx';
+import TestSection from '../../components/TestSection.jsx';
+import PerformanceSection from '../../components/PerformanceSection.jsx';
+import HistorySection from '../../components/HistorySection.jsx';
 
 const Home = () => {
   const [user, setUser] = useState(null);
@@ -35,7 +37,7 @@ const Home = () => {
   const fetchUserData = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/auth/getMe', {
+      const response = await fetch('/api/auth/me', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();

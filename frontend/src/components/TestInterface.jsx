@@ -1,4 +1,8 @@
 //  Test Interface Component
+import React, { useState } from 'react';
+import TestResults from './TestResult.jsx';
+
+
 const TestInterface = ({ test, onComplete }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});

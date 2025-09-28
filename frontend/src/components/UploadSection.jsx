@@ -1,7 +1,6 @@
 // Upload Section Component
 import { Image, FileText, Trash2, Upload, RefreshCw, Brain, Play } from "lucide-react";
 import React, { useState } from "react";
-// import GeneratedQuestionsPreview from "./GeneratedQuestionsPreview"; // Assuming this is a separate component for previewing generated questions
 import { useNavigate } from "react-router-dom";
 
 const UploadSection = () => {
@@ -35,23 +34,19 @@ const UploadSection = () => {
 
   const handleFileSelect = (e) => {
     if (e.target.files && e.target.files[0]) {
-      setUploadedFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setUploadedFile(file);
+      uploadFile(file);
     }
   };
 
-  const generateQuestions = async () => {
-    if (!uploadedFile) return;
-    
-    setGenerating(true);
+  const uploadFile = async (file) => {
     try {
       const formData = new FormData();
-      formData.append('file', uploadedFile);
-      formData.append('questionType', questionType);
-      formData.append('questionCount', questionCount);
-      formData.append('difficulty', difficulty);
+      formData.append('file', file);
 
       const token = localStorage.getItem('token');
-      const response = await fetch('http://localhost:5000/api/questions/generate', {
+      const response = await fetch('/api/quiz/upload', {
         method: 'POST',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -60,9 +55,53 @@ const UploadSection = () => {
       });
 
       const data = await response.json();
-      setGeneratedQuestions(data.questions);
+      
+      if (response.ok) {
+        setUploadedFile({...file, id: data.file.id, extractedText: data.file.extractedText});
+        console.log('File uploaded successfully:', data);
+      } else {
+        throw new Error(data.message || 'Upload failed');
+      }
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      alert('Upload failed: ' + error.message);
+    }
+  };
+
+  const generateQuestions = async () => {
+    if (!uploadedFile || !uploadedFile.id) {
+      alert('Please upload a file first');
+      return;
+    }
+    
+    setGenerating(true);
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/quiz/generate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          fileId: uploadedFile.id,
+          questionType,
+          questionCount,
+          difficulty
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (response.ok) {
+        setGeneratedQuestions(data.questions);
+        console.log('Questions generated successfully:', data);
+      } else {
+        throw new Error(data.message || 'Question generation failed');
+      }
     } catch (error) {
       console.error('Error generating questions:', error);
+      alert('Question generation failed: ' + error.message);
     } finally {
       setGenerating(false);
     }

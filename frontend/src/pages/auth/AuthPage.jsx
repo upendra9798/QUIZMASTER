@@ -10,10 +10,10 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const AuthPage = () => {
+const AuthPage = ({ isSignUp: initialSignUp = true, setToken }) => {
   const navigate = useNavigate();
 
-  const [isSignUp, setIsSignUp] = useState(true);
+  const [isSignUp, setIsSignUp] = useState(initialSignUp);
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -113,7 +113,6 @@ const AuthPage = () => {
             text: data.message || "Account created successfully",
           });
 
-          // Clear form and switch to login
           setFormData({
             firstName: "",
             lastName: "",
@@ -123,13 +122,12 @@ const AuthPage = () => {
             agreeToTerms: false,
           });
 
-          // Wait briefly before showing login form
           setTimeout(() => {
             setIsSignUp(false);
           }, 1500);
         } else {
           // Login flow
-          localStorage.setItem("token", data.token);
+          setToken(data.token); // ✅ Update App state instantly
           navigate("/home");
         }
       } else {
@@ -144,7 +142,7 @@ const AuthPage = () => {
       setLoading(false);
     }
   };
-
+  
   const switchMode = () => {
     setIsSignUp(!isSignUp);
     setFormData({

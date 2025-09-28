@@ -1,4 +1,6 @@
 // Test Card Component
+import { BookOpen, Clock, Play } from "lucide-react";
+
 const TestCard = ({ test, onStart }) => (
   <div className="bg-white border border-gray-200 rounded-xl p-6 hover:shadow-lg transition-shadow">
     <div className="flex items-start justify-between mb-4">
