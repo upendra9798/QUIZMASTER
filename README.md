@@ -1,10 +1,10 @@
 # 🧠 QuizMaster - AI-Powered Learning Platform
 
-[![React](https://img.shields.io/badge/React-19.1.1-blue.svg)](https://reactjs.org/)
-[![Node.js](https://img.shields.io/badge/Node.js-Latest-green.svg)](https://nodejs.org/)
-[![Express.js](https://img.shields.io/badge/Express.js-5.1.0-lightgrey.svg)](https://expressjs.com/)
-[![MongoDB](https://img.shields.io/badge/MongoDB-Latest-green.svg)](https://mongodb.com/)
-[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.11-blue.svg)](https://tailwindcss.com/)
+[![React](https://img.shields.io/badge/React-19.1.1-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
+[![Node.js](https://img.shields.io/badge/Node.js-Latest-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
+[![Express.js](https://img.shields.io/badge/Express.js-5.1.0-000000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+[![MongoDB](https://img.shields.io/badge/MongoDB-Latest-47A248?style=for-the-badge&logo=mongodb&logoColor=white)](https://mongodb.com/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4.1.11-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 
 > **QuizMaster** is a modern, full-stack web application that leverages AI to transform your study materials into interactive quizzes. Upload PDFs or images, generate personalized questions, track your learning progress, and achieve your educational goals with intelligent insights.
 
@@ -323,19 +323,7 @@ FRONTEND_URL=https://yourdomain.com
 PORT=7000
 ```
 
-### **Docker Deployment** (Optional)
-```dockerfile
-# Example Docker configuration
-FROM node:18-alpine
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-COPY . .
-EXPOSE 7000
-CMD ["npm", "start"]
-```
 
----
 
 ## 🧪 **Testing Strategy**
 
@@ -379,16 +367,10 @@ CMD ["npm", "start"]
 
 **Developed by:** Upendra Kushwaha  
 **Role:** Full-Stack Developer  
-**Contact:** [Your Email]  
-**LinkedIn:** [Your LinkedIn]  
-**GitHub:** [Your GitHub]
+**Contact:** upendrakushwaha022@gmail.com 
+**LinkedIn:** upendra97948  
+**GitHub:** upendra9798
 
-### **Development Timeline**
-- **Planning & Design**: 1 week
-- **Backend Development**: 2 weeks
-- **Frontend Development**: 2 weeks
-- **Integration & Testing**: 1 week
-- **Deployment & Polish**: 1 week
 
 ---
 
